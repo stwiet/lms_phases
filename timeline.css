@@ -1,0 +1,230 @@
+/* =========================================================
+   COTR LMS Transition Timeline
+   Brand colours: teal #009aa6, dark teal #00505c, gold #FDC82F
+   Note: #009aa6 is used for lines/markers/accents only —
+   it doesn't meet 4.5:1 contrast for small text on white.
+   ========================================================= */
+
+:root {
+  --cotr-teal: #009aa6;
+  --cotr-teal-dark: #00505c;
+  --cotr-gold: #FDC82F;
+  --cotr-black: #111111;
+  --cotr-grey-dark: #4a4a4a;
+  --cotr-grey-light: #eef0f1;
+  --cotr-white: #ffffff;
+
+  --tl-line-width: 4px;
+  --tl-marker-size: 22px;
+  --tl-gap: 2.5rem;
+  --tl-radius: 6px;
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--cotr-white);
+  color: var(--cotr-black);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  line-height: 1.5;
+}
+
+.cotr-timeline-wrap {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 2rem;
+}
+
+/* ---------- Header ---------- */
+.cotr-timeline-header { text-align: center; margin-bottom: 2rem; }
+.cotr-timeline-header h2 {
+  margin: 0 0 .5rem;
+  color: var(--cotr-teal-dark);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+.cotr-timeline-header p {
+  margin: 0 auto;
+  max-width: 60ch;
+  color: var(--cotr-grey-dark);
+}
+
+/* ---------- Timeline (mobile first: single column, line on left) ---------- */
+.cotr-timeline {
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 2.5rem;
+}
+
+.cotr-timeline::before {           /* the vertical line */
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(1.25rem - var(--tl-line-width) / 2);
+  width: var(--tl-line-width);
+  background: var(--cotr-teal);
+  border-radius: 2px;
+}
+
+.tl-item {
+  position: relative;
+  margin-bottom: var(--tl-gap);
+}
+.tl-item:last-child { margin-bottom: 0; }
+
+.tl-marker {
+  position: absolute;
+  top: 1.25rem;
+  left: calc(-1.25rem - var(--tl-marker-size) / 2);
+  width: var(--tl-marker-size);
+  height: var(--tl-marker-size);
+  border-radius: 50%;
+  background: var(--cotr-white);
+  border: 4px solid var(--cotr-teal-dark);
+  z-index: 1;
+}
+
+/* ---------- Cards ---------- */
+.tl-card {
+  background: var(--cotr-grey-light);
+  border-top: 5px solid var(--cotr-teal);
+  border-radius: var(--tl-radius);
+  padding: 1.25rem 1.5rem;
+}
+
+.tl-title {
+  margin: 0;
+  color: var(--cotr-teal-dark);
+  font-size: 1.3rem;
+}
+
+.tl-date {
+  margin: .25rem 0 .75rem;
+  color: var(--cotr-grey-dark);
+  font-style: italic;
+  font-weight: 600;
+}
+
+.tl-list {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+.tl-list li { margin-bottom: .3rem; }
+.tl-list li::marker { color: var(--cotr-teal); }
+
+/* ---------- Decision milestone ---------- */
+.tl-milestone .tl-marker {
+  border-radius: 3px;
+  transform: rotate(45deg);          /* diamond */
+  background: var(--cotr-gold);
+  border-color: var(--cotr-black);
+}
+.tl-milestone .tl-card {
+  background: var(--cotr-gold);
+  border-top: none;
+  border-left: 6px solid var(--cotr-black);
+  padding: .9rem 1.5rem;
+}
+.tl-milestone .tl-title { color: var(--cotr-black); }
+.tl-milestone .tl-date  { color: var(--cotr-black); margin-bottom: 0; }
+
+/* ---------- Migration paths (Moodle vs D2L) ---------- */
+.tl-paths {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.tl-path {
+  background: var(--cotr-white);
+  border-left: 4px solid var(--cotr-teal-dark);
+  border-radius: 4px;
+  padding: .75rem 1rem;
+}
+.tl-path h4 {
+  margin: 0 0 .5rem;
+  font-size: 1rem;
+  color: var(--cotr-teal-dark);
+}
+.tl-path ul { list-style: none; margin: 0; padding: 0; }
+.tl-path li {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: .25rem 1rem;
+  padding: .35rem 0;
+  border-bottom: 1px solid var(--cotr-grey-light);
+}
+.tl-path li:last-child { border-bottom: none; }
+.tl-path li span { color: var(--cotr-grey-dark); }
+
+/* ---------- Footer note ---------- */
+.cotr-timeline-note {
+  margin: 2rem auto 0;
+  max-width: 65ch;
+  padding: .9rem 1.25rem;
+  border-left: 5px solid var(--cotr-gold);
+  background: var(--cotr-grey-light);
+  color: var(--cotr-grey-dark);
+}
+
+/* ---------- Desktop: centred line, alternating cards ---------- */
+@media (min-width: 768px) {
+  .cotr-timeline { padding-left: 0; }
+
+  .cotr-timeline::before {
+    left: calc(50% - var(--tl-line-width) / 2);
+  }
+
+  .tl-item {
+    width: 50%;
+    padding-right: 2.5rem;
+  }
+  .tl-item:nth-child(even) {
+    margin-left: 50%;
+    padding-right: 0;
+    padding-left: 2.5rem;
+  }
+
+  .tl-marker {
+    left: auto;
+    right: calc(var(--tl-marker-size) / -2);
+  }
+  .tl-item:nth-child(even) .tl-marker {
+    right: auto;
+    left: calc(var(--tl-marker-size) / -2);
+  }
+
+  /* little pointer from card toward the line */
+  .tl-card { position: relative; }
+  .tl-item .tl-card::after {
+    content: "";
+    position: absolute;
+    top: 1.35rem;
+    right: -10px;
+    border: 10px solid transparent;
+    border-right: 0;
+    border-left-color: var(--cotr-grey-light);
+  }
+  .tl-item:nth-child(even) .tl-card::after {
+    right: auto;
+    left: -10px;
+    border-left: 0;
+    border-right: 10px solid var(--cotr-grey-light);
+  }
+  .tl-milestone .tl-card::after { border-left-color: var(--cotr-gold); }
+  .tl-milestone:nth-child(even) .tl-card::after {
+    border-left-color: transparent;
+    border-right-color: var(--cotr-gold);
+  }
+  /* milestone has a black left border; hide pointer on that side */
+  .tl-milestone:nth-child(even) .tl-card::after { display: none; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .tl-card { transition: box-shadow .2s ease; }
+  .tl-card:hover { box-shadow: 0 4px 14px rgba(0, 0, 0, .08); }
+}
